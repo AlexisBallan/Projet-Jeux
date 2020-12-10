@@ -7,11 +7,14 @@ public class Personnage : MonoBehaviour
 {
     public GameObject Perso1, Perso2;
 
+    private GameObject JoueurActif;
     private bool ChangeClick = true;
     private GameObject m_testActive;
     private void Start()
     {
         Perso1.transform.GetChild(0).gameObject.SetActive(true);
+
+        JoueurActif = Perso1;
     }
 
     public void ChangerClick()
@@ -27,13 +30,19 @@ public class Personnage : MonoBehaviour
     {
         ChangerClick();
 
-        if(ChangeClick == true) { }
+        if (JoueurActif == Perso1)
+            JoueurActif = Perso2;
+        else
+            JoueurActif = Perso1;
         
     }
 
-    public void AppliquerDommage()
+    public void AppliquerDommage(float degat)
     {
-
+        if (Perso1 == JoueurActif)
+            Perso2.GetComponent<King>().TakeDamage(degat);
+        else
+            Perso1.GetComponent<Warrior>().TakeDamage(degat);
     }
 
     

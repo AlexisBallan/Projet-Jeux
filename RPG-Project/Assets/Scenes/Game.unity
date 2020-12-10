@@ -158,8 +158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 170, y: -140.87502}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 173.8, y: -140.87502}
+  m_SizeDelta: {x: 32.75888, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &496952972
 MonoBehaviour:
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -203,7 +203,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 496952973}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1636771682}
+        m_TargetAssemblyTypeName: King, Assembly-CSharp
+        m_MethodName: Attaque
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &496952973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,6 +377,7 @@ MonoBehaviour:
   Degat: 0
   minDegat: 30
   maxDegat: 40
+  anim: {fileID: 610439738}
 --- !u!1 &751593671
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +441,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &821968166
 RectTransform:
   m_ObjectHideFlags: 0
@@ -923,8 +936,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 220, y: -140.87502}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 238.6, y: -140.3}
+  m_SizeDelta: {x: 31.798569, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1240081586
 MonoBehaviour:
@@ -939,7 +952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1025,7 +1038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1490134835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1231,6 +1244,7 @@ MonoBehaviour:
   Degat: 0
   minDegat: 50
   maxDegat: 60
+  anim: {fileID: 1636771679}
 --- !u!1 &1655766781
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,8 +1346,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 270, y: -140.87502}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 293.9, y: -140.9}
+  m_SizeDelta: {x: 31.798538, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1830269219
 MonoBehaviour:
@@ -1348,7 +1362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
