@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class King : MonoBehaviour
 {
-    public float VieRoi = 150;
-    public float Resistance, minResistance = 5, maxResistance = 10;
-    public float Degat, minDegat = 50, maxDegat = 60;
+    public int VieRoi = 150;
+    public int Resistance, minResistance = 5, maxResistance = 10;
+    public int Degat, minDegat = 50, maxDegat = 60;
     public Animator anim;
+    public int Stamina = 10;
 
     private Personnage Personnage;
     private bool IsDead = false;
@@ -25,17 +26,17 @@ public class King : MonoBehaviour
     }
 
 
-    public float GetResistance()
+    public int GetResistance()
     {
         return Resistance = Random.Range(minResistance, maxResistance);
     }
 
-    public float DoDegat()
+    public int DoDegat()
     {
         return Degat = Random.Range(minDegat, maxDegat);
     }
 
-    public void TakeDamage(float a_TakeDamage)
+    public void TakeDamage(int a_TakeDamage)
     {
         a_TakeDamage -= GetResistance();
 

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Warrior : MonoBehaviour
 {
-    public float VieWarrior = 120;
-    public float Resistance, minResistance = 13, maxResistance = 17;
-    public float Degat, minDegat = 30, maxDegat = 40;
+    public int VieWarrior = 120;
+    public int Resistance, minResistance = 13, maxResistance = 17;
+    public int Degat, minDegat = 30, maxDegat = 40;
     public Animator anim;
+    public int Stamina = 10;
 
     private Personnage Personnage;
     private bool IsDead = false;
@@ -22,17 +23,17 @@ public class Warrior : MonoBehaviour
         Personnage = GameObject.Find("GererTout").GetComponent<Personnage>();
     }
 
-    public float GetResistance()
+    public int GetResistance()
     {
         return Resistance = Random.Range(minResistance, maxResistance);
     }
 
-    public float DoDegat()
+    public int DoDegat()
     {
         return Degat = Random.Range(minDegat, maxDegat);
     }
 
-    public void TakeDamage(float a_TakeDamage)
+    public void TakeDamage(int a_TakeDamage)
     {
         a_TakeDamage -= GetResistance();
 
@@ -68,6 +69,8 @@ public class Warrior : MonoBehaviour
     {
 
     }
+
+   
 
     public void Ulti()
     {
