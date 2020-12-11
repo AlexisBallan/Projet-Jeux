@@ -1,61 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Warrior : MonoBehaviour
+public class Warrior : Ennemi
 {
-    public int VieWarrior = 120;
-    public int Resistance, minResistance = 13, maxResistance = 17;
-    public int Degat, minDegat = 30, maxDegat = 40;
     public Animator anim;
-    public int Stamina = 10;
 
-    private Personnage Personnage;
-    private bool IsDead = false;
-
-    public void IAMode()
+    //Attaque normal
+    public override void Spell1()
     {
+        base.Spell1();
 
-    }
-
-    private void Awake()
-    {
-        Personnage = GameObject.Find("GererTout").GetComponent<Personnage>();
-    }
-
-    public int GetResistance()
-    {
-        return Resistance = Random.Range(minResistance, maxResistance);
-    }
-
-    public int DoDegat()
-    {
-        return Degat = Random.Range(minDegat, maxDegat);
-    }
-
-    public void TakeDamage(int a_TakeDamage)
-    {
-        a_TakeDamage -= GetResistance();
-
-        if (a_TakeDamage < 5)
-            a_TakeDamage = 5;
-
-        VieWarrior -= a_TakeDamage;
-
-        VerifMort();
-
-        Debug.Log(VieWarrior);
-        Debug.Log(a_TakeDamage);
-    }
-
-    private void VerifMort()
-    {
-        if (VieWarrior <= 0)
-            IsDead = true;
-    }
-
-    public void Attaque()
-    {
         Personnage.AppliquerDommage(DoDegat());
         int RandomAnim = Random.Range(0, 3);
 
@@ -63,17 +19,46 @@ public class Warrior : MonoBehaviour
             anim.SetTrigger("Attack1");
         else
             anim.SetTrigger("Attack2");
-    }
 
-    public void Assomement()
-    {
+        Stamina -= CoutSpell1;
 
     }
 
-   
-
-    public void Ulti()
+    //Assomement
+    public override void Spell2()
     {
+        base.Spell2();
 
+        Personnage.AppliquerDommage(55);
+
+        Personnage.AppliquerStunt(Stunt);
+
+        Stamina -= CoutSpell2;
+    }
+
+    //Decoupage
+    public override void Spell3()
+    {
+        base.Spell3();
+
+        StartCoroutine(Decoupage());
+
+        Stamina -= CoutSpell3;
+    }
+
+    private IEnumerator Decoupage()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Personnage.AppliquerDommage(DoDegat());
+            int RandomAnim = Random.Range(0, 3);
+
+            if (RandomAnim == 0)
+                anim.SetTrigger("Attack1");
+            else
+                anim.SetTrigger("Attack2");
+
+            yield return new WaitForSeconds(0.5f);
+        }
     }
 }

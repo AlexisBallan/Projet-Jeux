@@ -1,83 +1,117 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class King : MonoBehaviour
+public class King : Ennemi
 {
-    public int VieRoi = 150;
-    public int Resistance, minResistance = 5, maxResistance = 10;
-    public int Degat, minDegat = 50, maxDegat = 60;
     public Animator anim;
-    public int Stamina = 10;
 
-    private Personnage Personnage;
-    private bool IsDead = false;
-    
-
-
-
-    private void Awake()
+    public override void IAMode()
     {
-        Personnage = GameObject.Find("GererTout").GetComponent<Personnage>();
+        base.IAMode();
+
+        while(Stamina > 8)
+        {
+            if (Vie < 100)
+            {
+                if (Stamina < 15)
+                {
+                    int Action = Random.Range(0, 3);
+
+                    if (Action == 2)
+                        return;
+                    else
+                        Spell1();
+                }
+                else if (Stamina < 25)
+                {
+                    int Action = Random.Range(0, 7);
+
+                    if (Action == 5)
+                        return;
+                    else if (Action <= 1)
+                        Spell1();
+                    else
+                        Spell3();
+                }
+                else
+                {
+                    int Action = Random.Range(0, 15);
+
+                    if (Action == 14)
+                        return;
+                    else if (Action < 2)
+                        Spell1();
+                    else if (Action < 5)
+                        Spell3();
+                    else
+                        Spell2();
+                }
+            }
+            else
+            {
+                if (Stamina < 25)
+                {
+                    int Action = Random.Range(0, 3);
+
+                    if (Action == 2)
+                        Personnage.ChangerTour();
+                    else 
+                        Spell1();
+                }
+                else
+                {
+                    int Action = Random.Range(0, 8);
+
+                    if (Action == 7)
+                        return;
+                    else if (Action < 2)
+                        Spell1();
+                    else
+                        Spell2();
+                }
+            }
+        }
     }
-    public void IAMode()
+
+    //Attaque normal
+    public override void Spell1()
     {
+        base.Spell1();
 
-    }
-
-
-    public int GetResistance()
-    {
-        return Resistance = Random.Range(minResistance, maxResistance);
-    }
-
-    public int DoDegat()
-    {
-        return Degat = Random.Range(minDegat, maxDegat);
-    }
-
-    public void TakeDamage(int a_TakeDamage)
-    {
-        a_TakeDamage -= GetResistance();
-
-        if (a_TakeDamage < 5)
-            a_TakeDamage = 5;
-
-        VieRoi -= a_TakeDamage;
-
-        VerifMort();
-
-        Debug.Log(VieRoi);
-        Debug.Log(a_TakeDamage);
-    }
-
-    private void VerifMort()
-    {
-        if (VieRoi <= 0)
-            IsDead = true;
-    }
-
-    public void Attaque()
-    {
         Personnage.AppliquerDommage(DoDegat());
-
-        int RandomAnim = Random.Range(0, 4);
+        int RandomAnim = Random.Range(0, 3);
 
         if (RandomAnim == 0)
             anim.SetTrigger("Attack1");
-        else if (RandomAnim == 1)
-            anim.SetTrigger("Attack2");
         else
-            anim.SetTrigger("Attack3");
+            anim.SetTrigger("Attack2");
+
+        Stamina -= CoutSpell1;
     }
 
-    public void Assomement()
+    //Lumiere
+    public override void Spell2()
     {
+        base.Spell2();
 
+        //rajouter une animation
+
+        Vie = Vie + Heal;
+
+        Stamina -= CoutSpell2;
     }
 
-    public void Ulti()
+    //Heal
+    public override void Spell3()
     {
+        base.Spell3();
 
+        // rajouter une animation
+
+        Vie = 150;
+
+        Stamina -= CoutSpell3;
     }
 }
