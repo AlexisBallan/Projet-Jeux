@@ -22,6 +22,11 @@ public class Warrior : Ennemi
 
         Stamina -= CoutSpell1;
 
+        WaitAction();
+
+        while (WaitIsInAction == true) { }
+
+        WaitIsInAction = false;
     }
 
     //Assomement
@@ -34,6 +39,26 @@ public class Warrior : Ennemi
         Personnage.AppliquerStunt(Stunt);
 
         Stamina -= CoutSpell2;
+
+        int RandomAnim = Random.Range(0, 3);
+
+        if (RandomAnim == 0)
+            anim.SetTrigger("Attack1");
+        else
+            anim.SetTrigger("Attack2");
+
+        WaitAction();
+
+        while (WaitIsInAction == true) { }
+
+        WaitIsInAction = false;
+    }
+
+    private IEnumerator WaitAction()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        WaitIsInAction = true;
     }
 
     //Decoupage
@@ -44,6 +69,12 @@ public class Warrior : Ennemi
         StartCoroutine(Decoupage());
 
         Stamina -= CoutSpell3;
+
+        WaitAction();
+
+        while (WaitIsInAction == true) { }
+
+        WaitIsInAction = false;
     }
 
     private IEnumerator Decoupage()

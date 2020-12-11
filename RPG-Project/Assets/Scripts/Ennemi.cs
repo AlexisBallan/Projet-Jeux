@@ -18,7 +18,7 @@ public class Ennemi : MonoBehaviour
     private bool IsDead = false;
 
     protected Personnage Personnage;
-
+    public bool WaitIsInAction;
 
     public virtual void TakeDamage(int a_TakeDamage)
     {
@@ -30,6 +30,8 @@ public class Ennemi : MonoBehaviour
         Vie -= a_TakeDamage;
 
         VerifMort();
+
+        Stamina += (int)a_TakeDamage / 10;
 
         Debug.Log(a_TakeDamage);
     }

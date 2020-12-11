@@ -9,8 +9,6 @@ public class King : Ennemi
 
     public override void IAMode()
     {
-        base.IAMode();
-
         while(Stamina > 8)
         {
             if (Vie < 100)
@@ -22,7 +20,9 @@ public class King : Ennemi
                     if (Action == 2)
                         return;
                     else
+                    {
                         Spell1();
+                    }
                 }
                 else if (Stamina < 25)
                 {
@@ -31,9 +31,13 @@ public class King : Ennemi
                     if (Action == 5)
                         return;
                     else if (Action <= 1)
+                    {
                         Spell1();
+                    }
                     else
+                    {
                         Spell3();
+                    }
                 }
                 else
                 {
@@ -42,11 +46,17 @@ public class King : Ennemi
                     if (Action == 14)
                         return;
                     else if (Action < 2)
+                    {
                         Spell1();
+                    }
                     else if (Action < 5)
+                    {
                         Spell3();
+                    }
                     else
+                    {
                         Spell2();
+                    }
                 }
             }
             else
@@ -56,9 +66,11 @@ public class King : Ennemi
                     int Action = Random.Range(0, 3);
 
                     if (Action == 2)
-                        Personnage.ChangerTour();
-                    else 
+                        return;
+                    else
+                    {
                         Spell1();
+                    }
                 }
                 else
                 {
@@ -67,11 +79,16 @@ public class King : Ennemi
                     if (Action == 7)
                         return;
                     else if (Action < 2)
+                    {
                         Spell1();
+                    }
                     else
+                    {
                         Spell2();
+                    }
                 }
             }
+            new WaitForSecondsRealtime(2f);
         }
     }
 
@@ -79,6 +96,7 @@ public class King : Ennemi
     public override void Spell1()
     {
         base.Spell1();
+
 
         Personnage.AppliquerDommage(DoDegat());
         int RandomAnim = Random.Range(0, 3);
@@ -89,6 +107,40 @@ public class King : Ennemi
             anim.SetTrigger("Attack2");
 
         Stamina -= CoutSpell1;
+
+        WaitAction();
+
+        while (WaitIsInAction == true) { }
+
+        WaitIsInAction = false;
+    }
+
+    private IEnumerator WaitAction()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        WaitIsInAction = true;
+    }
+
+    //heal
+    public override void Spell3()
+    {
+        base.Spell3();
+
+
+        //rajouter une animation
+
+        Vie = Vie + Heal;
+
+        Stamina -= CoutSpell2;
+
+        WaitAction();
+
+        while (WaitIsInAction == true) { }
+
+        WaitIsInAction = false;
+
+        Debug.Log("Heal" + Vie);
     }
 
     //Lumiere
@@ -96,22 +148,21 @@ public class King : Ennemi
     {
         base.Spell2();
 
-        //rajouter une animation
-
-        Vie = Vie + Heal;
-
-        Stamina -= CoutSpell2;
-    }
-
-    //Heal
-    public override void Spell3()
-    {
-        base.Spell3();
 
         // rajouter une animation
 
         Vie = 150;
 
         Stamina -= CoutSpell3;
+
+        WaitAction();
+
+        while (WaitIsInAction == true) { }
+
+        WaitIsInAction = false;
+
+        
+
+        Debug.Log("Lumiere" + Vie);
     }
 }
