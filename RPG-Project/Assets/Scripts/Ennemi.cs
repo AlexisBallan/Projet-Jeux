@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Ennemi : MonoBehaviour
 {
-    public int Vie = 150;
+    public float Vie = 150;
     public int Stamina = 10;
     public int Resistance, minResistance = 13, maxResistance = 17;
     public int Degat, minDegat = 30, maxDegat = 40;
@@ -13,6 +13,9 @@ public class Ennemi : MonoBehaviour
     public int CoutSpell1, CoutSpell2, CoutSpell3;
     public int Stunt;
     public int Heal;
+    public Slider currentHealthBar;
+    public float BaseLife;
+    public Animator anim;
 
     private bool[] IsUseFull = new bool[4];
     private bool IsDead = false;
@@ -32,15 +35,11 @@ public class Ennemi : MonoBehaviour
         VerifMort();
 
         Stamina += (int)a_TakeDamage / 10;
-
-        Debug.Log(a_TakeDamage);
     }
 
     public virtual void TakeStunt(int a_Stunt)
     {
         Stamina -= a_Stunt;
-
-        Debug.Log(Stamina);
     }
 
     private void Awake()
@@ -58,6 +57,7 @@ public class Ennemi : MonoBehaviour
         if (Vie <= 0)
         {
             IsDead = true;
+            anim.SetTrigger("Death");
             Time.timeScale = 0f;
         }
     }
@@ -72,9 +72,12 @@ public class Ennemi : MonoBehaviour
         return Degat = Random.Range(minDegat, maxDegat);
     }
 
-    public virtual void IAMode()
-    {
+    public virtual void IAMode() { }
 
+    private void FixedUpdate()
+    {
+        float Ratio = (Vie / BaseLife);
+        currentHealthBar.GetComponent<Slider>().value = Ratio;
     }
 
     private void Update()
@@ -98,19 +101,10 @@ public class Ennemi : MonoBehaviour
         }
     }
 
-    public virtual void Spell1()
-    {
+    public virtual void Spell1() { }
 
-    }
-    
-    public virtual void Spell2()
-    {
+    public virtual void Spell2() { }
 
-    }
-    
-    public virtual void Spell3()
-    {
-
-    }
+    public virtual void Spell3() { }
 
 }

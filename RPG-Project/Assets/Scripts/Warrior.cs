@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Warrior : Ennemi
 {
-    public Animator anim;
 
     //Attaque normal
     public override void Spell1()
@@ -53,6 +52,7 @@ public class Warrior : Ennemi
 
         WaitIsInAction = false;
     }
+
 
     private IEnumerator WaitAction()
     {

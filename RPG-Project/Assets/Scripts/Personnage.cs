@@ -62,9 +62,6 @@ public class Personnage : MonoBehaviour
         Debug.Log("Changement de tour " + Random.Range(0, 750));
 
         Perso2.GetComponent<Ennemi>().IAMode();
-
-        ChangerTour();
-        Debug.Log("C'est mon tour " + Random.Range(0,750));
     }
 
     public void AppliquerDommage(int degat)

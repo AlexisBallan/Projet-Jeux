@@ -5,90 +5,106 @@ using UnityEngine.UI;
 
 public class King : Ennemi
 {
-    public Animator anim;
+    public GameObject AnimHeal;
+    public GameObject AnimLumiere;
+
+    private bool IsBotAttacking = true;
+    private bool IA = false;
 
     public override void IAMode()
     {
-        while(Stamina > 8)
+        IA = true;
+        StartCoroutine(WaitAnim());
+    }
+
+    public IEnumerator WaitAnim()
+    {
+        IsBotAttacking = true;
+
+        yield return new WaitForSeconds(0.5f);
+        IsBotAttacking = false;
+    }
+
+    private void FinTour()
+    {
+        Personnage.ChangerTour();
+    }
+
+    //Fonctionnement de l'IA 
+    private void Update()
+    {
+        if (IsBotAttacking == false && IA == true)
         {
-            if (Vie < 100)
+            if (Stamina >= 6)
             {
-                if (Stamina < 15)
+                if (Vie < 100)
                 {
-                    int Action = Random.Range(0, 3);
+                    if (Stamina < 8)
+                    {
+                        int Action = Random.Range(0, 4);
 
-                    if (Action == 2)
-                        return;
+                        if (Action == 3)
+                        {
+                            IA = false;
+                            FinTour();
+                        }
+                        else
+                            Spell3();
+                    }
+                    else if (Stamina < 22)
+                    {
+                        int Action = Random.Range(0, 11);
+
+                        if (Action < 5)
+                            Spell1();
+                        else
+                            Spell3();
+                    }
                     else
                     {
-                        Spell1();
-                    }
-                }
-                else if (Stamina < 25)
-                {
-                    int Action = Random.Range(0, 7);
-
-                    if (Action == 5)
-                        return;
-                    else if (Action <= 1)
-                    {
-                        Spell1();
-                    }
-                    else
-                    {
-                        Spell3();
+                        int Action = Random.Range(0, 10);
+                        
+                        if (Action < 2)
+                            Spell1();
+                        else
+                            Spell2();
                     }
                 }
                 else
                 {
-                    int Action = Random.Range(0, 15);
+                    if (Stamina < 8)
+                    {
+                        int Action = Random.Range(0, 4);
 
-                    if (Action == 14)
-                        return;
-                    else if (Action < 2)
-                    {
-                        Spell1();
-                    }
-                    else if (Action < 5)
-                    {
-                        Spell3();
+                        if (Action == 3)
+                        {
+                            IA = false;
+                            FinTour();
+                        }
+                        else
+                            Spell3();
                     }
                     else
                     {
-                        Spell2();
+                        int Action = Random.Range(0, 22);
+
+                        if (Action == 21)
+                        {
+                            IA = false;
+                            FinTour();
+                        }
+                        else if (Action <= 10)
+                            Spell1();
+                        else
+                            Spell3();
                     }
                 }
             }
             else
             {
-                if (Stamina < 25)
-                {
-                    int Action = Random.Range(0, 3);
-
-                    if (Action == 2)
-                        return;
-                    else
-                    {
-                        Spell1();
-                    }
-                }
-                else
-                {
-                    int Action = Random.Range(0, 8);
-
-                    if (Action == 7)
-                        return;
-                    else if (Action < 2)
-                    {
-                        Spell1();
-                    }
-                    else
-                    {
-                        Spell2();
-                    }
-                }
+                IA = false;
+                FinTour();
             }
-            new WaitForSecondsRealtime(2f);
         }
     }
 
@@ -96,7 +112,7 @@ public class King : Ennemi
     public override void Spell1()
     {
         base.Spell1();
-
+        StartCoroutine(WaitAnim());
 
         Personnage.AppliquerDommage(DoDegat());
         int RandomAnim = Random.Range(0, 3);
@@ -107,62 +123,31 @@ public class King : Ennemi
             anim.SetTrigger("Attack2");
 
         Stamina -= CoutSpell1;
-
-        WaitAction();
-
-        while (WaitIsInAction == true) { }
-
-        WaitIsInAction = false;
-    }
-
-    private IEnumerator WaitAction()
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        WaitIsInAction = true;
     }
 
     //heal
     public override void Spell3()
     {
         base.Spell3();
+        StartCoroutine(WaitAnim());
 
-
-        //rajouter une animation
+        Instantiate(AnimHeal, new Vector3(transform.position.x - 1, transform.position.y - 2, transform.position.z), Quaternion.identity);
 
         Vie = Vie + Heal;
 
-        Stamina -= CoutSpell2;
-
-        WaitAction();
-
-        while (WaitIsInAction == true) { }
-
-        WaitIsInAction = false;
-
-        Debug.Log("Heal" + Vie);
+        Stamina -= CoutSpell3;
     }
 
     //Lumiere
     public override void Spell2()
     {
         base.Spell2();
+        StartCoroutine(WaitAnim());
 
+        Instantiate(AnimLumiere, new Vector3(transform.position.x, transform.position.y - 2, transform.position.z), Quaternion.identity);
 
-        // rajouter une animation
+        Vie = BaseLife;
 
-        Vie = 150;
-
-        Stamina -= CoutSpell3;
-
-        WaitAction();
-
-        while (WaitIsInAction == true) { }
-
-        WaitIsInAction = false;
-
-        
-
-        Debug.Log("Lumiere" + Vie);
+        Stamina -= CoutSpell2;
     }
 }
